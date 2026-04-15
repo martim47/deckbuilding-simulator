@@ -45,6 +45,13 @@ def play_card(hand, state, opponent):
     # 2. Play strongest unit
     # 3. Ramp (crystal)
 
+    # --- Knight
+    if "K" in hand and state["energy"] >= 3:
+        hand.remove("K")
+        state["energy"] -= 3
+        state["knights"] += 1
+        return
+
     # --- Lightning Bolt (if valuable target exists)
     if "L" in hand and state["energy"] >= 2:
         if opponent["knights"] > 0 or opponent["soldiers"] >= 2:
@@ -52,13 +59,6 @@ def play_card(hand, state, opponent):
             state["energy"] -= 2
             kill_enemy_unit(opponent)
             return
-
-    # --- Knight
-    if "K" in hand and state["energy"] >= 3:
-        hand.remove("K")
-        state["energy"] -= 3
-        state["knights"] += 1
-        return
 
     # --- Soldier
     if "F" in hand and state["energy"] >= 1:
@@ -171,10 +171,10 @@ player_name = st.text_input("Enter your name (or nickname)", "")
 
 st.subheader("Build your deck")
 
-c = st.slider("Crystals", 0, 12, 4)
-f = st.slider("Soldiers", 0, 12, 4)
-k = st.slider("Knights", 0, 12, 4)
-l = st.slider("Lightning Bolt", 0, 12, 0)
+c = st.slider("Crystal", 0, 12, 6)
+f = st.slider("Foot Soldier", 0, 12, 2)
+k = st.slider("Knight", 0, 12, 2)
+l = st.slider("Lightning Bolt", 0, 12, 2)
 
 if c + f + k + l != 12:
     st.warning("Deck must have exactly 12 cards")
@@ -257,8 +257,7 @@ st.subheader("🏆 Top 10 Leaderboard")
 
 for i, entry in enumerate(highscores, 1):
     deck = entry["deck"]
-    deck_str = f"C{deck['C']}-F{deck['F']}-K{deck['K']}-L{deck['L']}"
 
     st.write(
-        f"{i}. {entry['name']} — {entry['score']} pts — {deck_str}"
+        f"{i}. {entry['name']} — {entry['score']}"
     )
