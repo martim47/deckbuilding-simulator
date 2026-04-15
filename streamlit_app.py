@@ -81,7 +81,7 @@ def init_player(deck):
     return {
         "deck": deck_copy[:],
         "hand": deck_copy[:3],
-        "health": 20,
+        "health": 40,
         "energy": 0,
         "crystals": 0,
         "soldiers": 0,
@@ -245,7 +245,7 @@ for i, entry in enumerate(highscores, 1):
     deck = entry["deck"]
 
     st.write(
-        f"{i}. {entry['name']} — {entry['score']}"
+        f"{i}. {entry['name']}: {entry['score'], {entry['deck_id']}}"
     )
 
 if st.button("Reset Leaderboard"):
