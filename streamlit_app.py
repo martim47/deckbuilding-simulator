@@ -13,6 +13,8 @@ def load_highscores():
             return json.load(f)
     return []
 
+highscores = load_highscores() or []
+
 def save_highscores(scores):
     temp_file = HIGHSCORE_FILE + ".tmp"
     with open(temp_file, "w") as f:
@@ -214,8 +216,6 @@ else:
             st.session_state.best_score = total_score
 
         st.write(f"🏆 Best Score: {st.session_state.best_score}")
-
-        highscores = load_highscores()
 
         deck_data = {
             "C": c,
