@@ -50,10 +50,10 @@ def play_card(hand, state, opponent):
         return
 
     # --- Lightning Bolt (if valuable target exists)
-    if "L" in hand and state["energy"] >= 2:
+    if "L" in hand and state["energy"] >= 1:
         if opponent["knights"] > 0 or opponent["soldiers"] >= 2:
             hand.remove("L")
-            state["energy"] -= 2
+            state["energy"] -= 1
             kill_enemy_unit(opponent)
             return
 
@@ -163,7 +163,7 @@ if st.toggle("Show card descriptions"):
     - Effect: Deals 3 damage per turn
 
     **Lightning Bolt (L)**
-    - Cost: 2  
+    - Cost: 1  
     - Effect: Destroy 1 enemy unit (prioritizes Knight)    
     """)
 
@@ -218,7 +218,7 @@ else:
         updated = False
 
         for entry in highscores:
-            if entry["name"] == player and entry["deck"] == deck_data:
+            if entry["name"] == player and entry["deck"] == deck_id:
                 # same player + same deck
                 if total_score > entry["score"]:
                     entry["score"] = total_score  # overwrite with better score
