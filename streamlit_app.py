@@ -218,7 +218,7 @@ st.subheader("🏆 Top 10 Leaderboard")
 
 for i, entry in enumerate(highscores, 1):
     st.write(
-        f"{i}. {entry['name']}: {entry['score'], {entry['deck_id']}}"
+        f"{i}. {entry['name']}: {entry['score']}"
     )
 
 if st.button("Reset Leaderboard"):
