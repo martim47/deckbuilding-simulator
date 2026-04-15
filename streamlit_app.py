@@ -3,7 +3,7 @@ import random
 import json
 import os
 
-CARDS = ["C", "F", "K", "L"]
+CARDS = ["C", "F", "K"]
 
 HIGHSCORE_FILE = "highscores.json"
 
@@ -27,20 +27,8 @@ def draw(deck, hand):
     if deck:
         hand.append(deck.pop(0))
 
-def kill_enemy_unit(opponent):
-    # prioritize killing knights (they are more valuable)
-    if opponent["knights"] > 0:
-        opponent["knights"] -= 1
-    elif opponent["soldiers"] > 0:
-        opponent["soldiers"] -= 1
-
 def play_card(hand, state, opponent):
     played_crystal = state["played_crystal"]
-
-    # Priority:
-    # 1. Kill big threats
-    # 2. Play strongest unit
-    # 3. Ramp (crystal)
 
     # --- Knight
     if "K" in hand and state["energy"] >= 3:
@@ -48,14 +36,6 @@ def play_card(hand, state, opponent):
         state["energy"] -= 3
         state["knights"] += 1
         return
-
-    # --- Lightning Bolt (if valuable target exists)
-    if "L" in hand and state["energy"] >= 1:
-        if opponent["knights"] > 0 or opponent["soldiers"] >= 2:
-            hand.remove("L")
-            state["energy"] -= 1
-            kill_enemy_unit(opponent)
-            return
 
     # --- Soldier
     if "F" in hand and state["energy"] >= 1:
@@ -140,8 +120,8 @@ def run_matchup(deck1, deck2, games=1000):
 
     return score, wins, losses, draws
 
-def deck_key(c, f, k, l):
-    return f"C{c}-F{f}-K{k}-L{l}"
+def deck_key(c, f, k):
+    return f"C{c}-F{f}-K{k}"
 
 # --- UI ---
 
@@ -162,9 +142,6 @@ if st.toggle("Show card descriptions"):
     - Cost: 3  
     - Effect: Deals 3 damage per turn
 
-    **Lightning Bolt (L)**
-    - Cost: 1  
-    - Effect: Destroy 1 enemy unit (prioritizes Knight)    
     """)
 
 if st.button("Reset Leaderboard"):
@@ -178,16 +155,14 @@ st.subheader("Build your deck")
 slider_crystal = st.slider("Crystal", 0, 12, 6)
 slider_foot_soldier = st.slider("Foot Soldier", 0, 12, 2)
 slider_knight = st.slider("Knight", 0, 12, 2)
-slider_lighting_bolt = st.slider("Lightning Bolt", 0, 12, 2)
 
-if slider_crystal + slider_foot_soldier + slider_knight + slider_lighting_bolt != 12:
+if slider_crystal + slider_foot_soldier + slider_knight != 12:
     st.warning("Deck must have exactly 12 cards")
 else:
     player_deck = (
         ["C"] * slider_crystal +
         ["F"] * slider_foot_soldier +
-        ["K"] * slider_knight +
-        ["L"] * slider_lighting_bolt
+        ["K"] * slider_knight
     )
 
     opponents = {
@@ -212,7 +187,7 @@ else:
 
         st.subheader(f"Total Score: {total_score}")
 
-        deck_id = deck_key(slider_crystal, slider_foot_soldier, slider_knight, slider_lighting_bolt)
+        deck_id = deck_key(slider_crystal, slider_foot_soldier, slider_knight)
 
         if player_name == "":
             st.caption("Tip: enter a name to track your scores")
