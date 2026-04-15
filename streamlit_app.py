@@ -81,7 +81,7 @@ def init_player(deck):
     return {
         "deck": deck_copy[:],
         "hand": deck_copy[:3],
-        "health": 40,
+        "health": 20,
         "energy": 0,
         "crystals": 0,
         "soldiers": 0,
@@ -94,7 +94,7 @@ def take_turn(player, opponent):
     player["played_crystal"] = False
 
     draw(player["deck"], player["hand"])
-    play_card(player["hand"], player, opponent)  # ← changed
+    play_card(player["hand"], player, opponent)
     deal_damage(player, opponent)
 
 def simulate(deck1, deck2, first_player=1):
