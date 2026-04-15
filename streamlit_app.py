@@ -180,7 +180,7 @@ slider_foot_soldier = st.slider("Foot Soldier", 0, 12, 2)
 slider_knight = st.slider("Knight", 0, 12, 2)
 slider_lighting_bolt = st.slider("Lightning Bolt", 0, 12, 2)
 
-if c + f + k + l != 12:
+if slider_crystal + slider_foot_soldier + slider_knight + slider_lighting_bolt != 12:
     st.warning("Deck must have exactly 12 cards")
 else:
     player_deck = (
