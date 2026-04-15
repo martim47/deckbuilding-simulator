@@ -218,7 +218,7 @@ else:
         updated = False
 
         for entry in highscores:
-            if entry["name"] == player and entry["deck"] == deck_id:
+            if entry["name"] == player and entry["deck_id"] == deck_id:
                 # same player + same deck
                 if total_score > entry["score"]:
                     entry["score"] = total_score  # overwrite with better score
@@ -229,7 +229,7 @@ else:
         if not updated:
             highscores.append({
                 "name": player,
-                "deck": deck_id,
+                "deck_id": deck_id,
                 "score": total_score
             })
 
