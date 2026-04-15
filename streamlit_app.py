@@ -21,9 +21,6 @@ def save_highscores(scores):
         json.dump(scores, f, indent=2)
     os.replace(temp_file, HIGHSCORE_FILE)
 
-if "best_score" not in st.session_state:
-    st.session_state.best_score = None
-
 # --- GAME LOGIC (reuse from before, slightly trimmed) ---
 
 def draw(deck, hand):
@@ -143,6 +140,9 @@ def run_matchup(deck1, deck2, games=1000):
 
     return score, wins, losses, draws
 
+def deck_key(c, f, k, l):
+    return f"C{c}-F{f}-K{k}-L{l}"
+
 # --- UI ---
 
 st.title("Deck Simulator")
@@ -208,21 +208,7 @@ else:
 
         st.subheader(f"Total Score: {total_score}")
 
-        # update best score
-        if (
-            st.session_state.best_score is None
-            or total_score > st.session_state.best_score
-        ):
-            st.session_state.best_score = total_score
-
-        st.write(f"🏆 Best Score: {st.session_state.best_score}")
-
-        deck_data = {
-            "C": c,
-            "F": f,
-            "K": k,
-            "L": l
-        }
+        deck_id = deck_key(c, f, k, l)
 
         if player_name == "":
             st.caption("Tip: enter a name to track your scores")
@@ -243,7 +229,7 @@ else:
         if not updated:
             highscores.append({
                 "name": player,
-                "deck": deck_data,
+                "deck": deck_id,
                 "score": total_score
             })
 
@@ -261,3 +247,7 @@ for i, entry in enumerate(highscores, 1):
     st.write(
         f"{i}. {entry['name']} — {entry['score']}"
     )
+
+if st.button("Reset Leaderboard"):
+    save_highscores([])
+    st.success("Leaderboard cleared!")
