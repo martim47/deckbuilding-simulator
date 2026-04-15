@@ -175,19 +175,19 @@ player_name = st.text_input("Enter your name (or nickname)", "")
 
 st.subheader("Build your deck")
 
-c = st.slider("Crystal", 0, 12, 6)
-f = st.slider("Foot Soldier", 0, 12, 2)
-k = st.slider("Knight", 0, 12, 2)
-l = st.slider("Lightning Bolt", 0, 12, 2)
+slider_crystal = st.slider("Crystal", 0, 12, 6)
+slider_foot_soldier = st.slider("Foot Soldier", 0, 12, 2)
+slider_knight = st.slider("Knight", 0, 12, 2)
+slider_lighting_bolt = st.slider("Lightning Bolt", 0, 12, 2)
 
 if c + f + k + l != 12:
     st.warning("Deck must have exactly 12 cards")
 else:
     player_deck = (
-        ["C"] * c +
-        ["F"] * f +
-        ["K"] * k +
-        ["L"] * l
+        ["C"] * slider_crystal +
+        ["F"] * slider_foot_soldier +
+        ["K"] * slider_knight +
+        ["L"] * slider_lighting_bolt
     )
 
     opponents = {
@@ -212,7 +212,7 @@ else:
 
         st.subheader(f"Total Score: {total_score}")
 
-        deck_id = deck_key(c, f, k, l)
+        deck_id = deck_key(slider_crystal, slider_foot_soldier, slider_knight, slider_lighting_bolt)
 
         if player_name == "":
             st.caption("Tip: enter a name to track your scores")
