@@ -148,9 +148,9 @@ player_name = st.text_input("Enter your name (or nickname)", "")
 
 st.subheader("Build your deck")
 
-slider_crystal = st.slider("Crystal", 0, 12, 6)
-slider_foot_soldier = st.slider("Foot Soldier", 0, 12, 2)
-slider_knight = st.slider("Knight", 0, 12, 2)
+slider_crystal = st.slider("Crystal", 0, 12, 4)
+slider_foot_soldier = st.slider("Foot Soldier", 0, 12, 4)
+slider_knight = st.slider("Knight", 0, 12, 4)
 
 if slider_crystal + slider_foot_soldier + slider_knight != 12:
     st.warning("Deck must have exactly 12 cards")
