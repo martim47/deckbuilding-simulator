@@ -77,7 +77,7 @@ def simulate(deck1, deck2, first_player=1):
 
     return 0
 
-def run_matchup(deck1, deck2, games=10000):
+def run_matchup(deck1, deck2, games=1000):
     score = 0
     wins = losses = draws = 0
 
