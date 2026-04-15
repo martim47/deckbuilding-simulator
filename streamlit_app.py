@@ -167,6 +167,10 @@ if st.toggle("Show card descriptions"):
     - Effect: Destroy 1 enemy unit (prioritizes Knight)    
     """)
 
+if st.button("Reset Leaderboard"):
+    save_highscores([])
+    st.success("Leaderboard cleared!")
+
 player_name = st.text_input("Enter your name (or nickname)", "")
 
 st.subheader("Build your deck")
@@ -248,6 +252,3 @@ for i, entry in enumerate(highscores, 1):
         f"{i}. {entry['name']}: {entry['score'], {entry['deck_id']}}"
     )
 
-if st.button("Reset Leaderboard"):
-    save_highscores([])
-    st.success("Leaderboard cleared!")
