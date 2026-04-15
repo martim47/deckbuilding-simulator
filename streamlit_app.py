@@ -246,8 +246,6 @@ else:
 st.subheader("🏆 Top 10 Leaderboard")
 
 for i, entry in enumerate(highscores, 1):
-    deck = entry["deck"]
-
     st.write(
         f"{i}. {entry['name']}: {entry['score'], {entry['deck_id']}}"
     )
